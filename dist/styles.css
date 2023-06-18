@@ -33,3 +33,56 @@ h1 {
 .form {
     border-style: groove;
 }
+
+li {
+    list-style-type: none;
+    margin: 5px;
+    border: 1px solid black;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.remove-checklist-item {
+    justify-self: right;
+    cursor: pointer;
+}
+
+#add-to-checklist {
+    margin-bottom: 20px;
+}
+
+.submit-button, .reset-button {
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 5px 5px 5px black;
+}
+.add-to-checklist {
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px black;
+}
+
+.reset-button {
+    margin-left: 20px;
+}
+
+.check-list-label {
+    text-align: left;
+    padding-top: 50px;
+}
+
+.done {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.display-li {
+    cursor: pointer;
+}
+
+.remove-todo-button {
+    grid-row: 5 / 6;
+    font-weight: 900;
+    background-color: red;
+    border-radius: 10px;
+}
