@@ -1,5 +1,6 @@
 import {compareAsc, format, parseISO, startOfToday} from 'date-fns';
-import { clearForm } from './dom-manip';
+import { clearForm } from './dom-manip.js';
+import {saveToDoLocal} from './manage-local-storage.js'
 
 // Creating an array for ToDo if needed
 let toDoArray = [];
@@ -38,10 +39,13 @@ export const createToDo = () => {
     let Checklist = CheckListArray.join(", ");
 
     //TODO: remove below two lines of code if array is not needed
-    toDoArray.push({Title, Description, DueDate, Priority, Checklist});
+    toDoArray.push({Title, Description, DueDate, Priority, CheckList});
+
+    //Call storage module an push object to local storage
+    saveToDoLocal({Title, Description, DueDate, Priority, CheckList});
 
     //Reset the form after successful submission
     clearForm();
 
-    return {Title, Description, DueDate, Priority, Checklist};
+    return {Title, Description, DueDate, Priority, CheckList};
 }

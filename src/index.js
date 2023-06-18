@@ -1,6 +1,5 @@
 import { createToDo } from './create-to-do.js';
 import { blankProjectLoad } from './blank-project-load.js';
-import { createToDo} from './create-to-do.js';
 import './styles.css';
 import {displayDefaultProject, displayTheForm, addItemToCheckList, clearForm} from './dom-manip.js';
 
@@ -33,5 +32,5 @@ let clickEventsModule = (function() {
 })();
 
 // Call create-to-do.js module file and apply some objects/properties (this will eventually be replaced by UI Input)
-const myToDo = createToDo("Grocery Run", "Go get groceries", "6/15/2023", "Low", "Meat, Eggs, Milk");
-const myToDo2 = createToDo("Homework", "Do Odin Project work", "06/20/2023", "Medium", "Read Module, Do ToDo Project");
+//const myToDo = createToDo("Grocery Run", "Go get groceries", "6/15/2023", "Low", "Meat, Eggs, Milk");
+//const myToDo2 = createToDo("Homework", "Do Odin Project work", "06/20/2023", "Medium", "Read Module, Do ToDo Project");
