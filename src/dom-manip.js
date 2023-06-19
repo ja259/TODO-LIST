@@ -55,20 +55,6 @@ export function clearForm() {
 
 export function displayToDo() {
 
-    //Check and clear current display DOM, if any
-    const removeDivs = document.querySelectorAll(".card");
-    console.log("show me the node of current DOM card divs....", removeDivs);
-    for (let i = 0; i < removeDivs.length; i++) {
-        removeDivs[i].remove();
-    }
-
-    //create the display card for the display DOM
-    console.log("display to screen");
-    const projects = document.querySelector(".projects");
-    const card = document.createElement("div");
-    card.classList.add("card");
-    projects.appendChild(card);
-
     //gather data from local backend storage and initialize
     let Title = localStorage.getItem("Title");
     let Description = localStorage.getItem("Description");
@@ -76,8 +62,36 @@ export function displayToDo() {
     let Priority = localStorage.getItem("Priority");
     let CheckList = localStorage.getItem("CheckList");
 
+    //Check to ensure local storage is present to load, otherwise gracefully return out -  avoid app crash
+    if (Title == null || Description == null || DueDate == null || Priority == null){
+        return;
+    }
+
+     //Check and clear current display DOM, if any
+     const removeDivs = document.querySelectorAll(".card");
+     for (let i = 0; i < removeDivs.length; i++) {
+         removeDivs[i].remove();
+     }
+
+      //create the display card for the display DOM
+     console.log("display to screen");
+     const projects = document.querySelector(".projects");
+     const card = document.createElement("div");
+     card.classList.add("card");
+     projects.appendChild(card);
+
+     // Create delete todo card button/event listener to remove card from display
+     const deleteToDoButton = document.createElement("button");
+     deleteToDoButton.classList.add("remove-todo-button");
+     deleteToDoButton.textContent = "Delete/Complete ToDo";
+     card.appendChild(deleteToDoButton);
+     deleteToDoButton.addEventListener("click", function deleteToDo() {
+        card.remove();
+        localStorage.clear();
+     });
+
     //place data in local temp array and loop over key/value pairs and display to DOM
-    let _displayArray = {Title, Description, DueDate, Priority, CheckList};
+    let _displayArray = {Title, Description, DueDate, Priority,};
     console.log(_displayArray);
 
     for (let key in _displayArray) {
@@ -85,5 +99,51 @@ export function displayToDo() {
         const para = document.createElement("p");
         para.textContent = (`${_displayArray[key]}`);
         card.appendChild(para);
+    }
+
+    //DOM for checklist items to present to right side display area
+    const para = document.querySelectorAll("p");
+    const CheckListLabel = document.createElement("p");
+    CheckListLabel.textContent = "CheckList Items (Click item when completed):";
+    const ul = document.createElement("ul");
+    CheckListLabel.classList.add("check-list-label");
+    para[para.length - 1].appendChild(ul);
+    ul.appendChild(CheckListLabel);
+
+    console.log("show me the contents of checklist from local storage...", CheckList);
+    let _CheckListArray = CheckList.split(",");
+    console.log("contents of temp checklistarrray....", _CheckListArray);
+
+    if (CheckList !== "") {
+        //Loop through the temp checklistarray to create an li and display to DOM for each
+        for (let i = 0; i < _CheckListArray.length; i++) {
+            console.log(_CheckListArray[i]);
+            const li = document.createElement("li");
+            li.className = "display-li";
+            li.textContent = _CheckListArray[i];
+
+            // Add Listener onto each li and toggle css class to strike through text on display
+            li.addEventListener("click", function strikeOutCheckListItem () {
+                if (li.classList.toggle("done")) {
+                    localStorage.setItem(li.textContent, "true");
+                }else if (li.classList.toggle("display-li")){
+                    localStorage.setItem(li.textContent, "false");
+                }
+            });
+            ul.appendChild(li);
+        }
+    } else return;
+
+    // Call on page refresh to check for existing strike through
+    window.onload = function() {
+
+        // Loop through current display li's on DOM and assign strike through css if local storage API flag is set
+        const liNodes = document.querySelectorAll(".display-li");
+         liNodes.forEach(liNodes => {
+            if (localStorage.getItem(liNodes.textContent) == "true") {
+                console.log("inside the onload if.....");
+                liNodes.className = "done";
+            }
+         })
     }
 }

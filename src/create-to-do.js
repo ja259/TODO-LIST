@@ -26,26 +26,26 @@ export const createToDo = () => {
     }
 
     //Loop over the nodelist for Check List items from the DOM and format to string
-    const nodeListCheckList = document.querySelectorAll("li");
-    let CheckListArray = [];
+    const nodeListCheckList = document.querySelectorAll(".form-li");
+    let _CheckListArray = [];
     for (let i = 0; i < nodeListCheckList.length; i++){
 
         //Strip off the "x" from end of each li then push to temp array
         let strippedCheckList = nodeListCheckList(i).textContent.replace("\u00D7", '');
-        CheckListArray.push(strippedCheckList);
+        _CheckListArray.push(strippedCheckList);
     }
 
     //Strip off the checklist array and convert to string with commas
-    let Checklist = CheckListArray.join(", ");
+    let CheckList = _CheckListArray.join(", ");
 
     //TODO: remove below two lines of code if array is not needed
     toDoArray.push({Title, Description, DueDate, Priority, CheckList});
 
     //Call storage module an push object to local storage
-    saveToDoLocal({Title, Description, DueDate, Priority, CheckList});
+    saveToDoLocal({Title, Description, DueDate, Priority}, CheckList);
 
     //Reset the form after successful submission
     clearForm();
 
-    return {Title, Description, DueDate, Priority, CheckList};
+    return {Title, Description, DueDate, Priority}, CheckList;
 }
