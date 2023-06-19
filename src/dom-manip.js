@@ -22,6 +22,7 @@ export function addItemToCheckList() {
     if (addItem !== "") {
         const ul = document.querySelector(".todo-ul");
         const li = document.createElement("li");
+        li.className = "form-li";
         li.textContent = addItem;
         const span = document.createElement("span");
         span.className = "remove-checklist-item";
@@ -32,8 +33,8 @@ export function addItemToCheckList() {
         document.getElementById("add-to-checklist").value = "";
 
         //DOM check for existing check list items already present
-        if (document.querySelectorAll("li").length > 0) {
-            const nodeListCheckList = document.querySelectorAll("li");
+        if (document.querySelectorAll(".form-li").length > 0) {
+            const nodeListCheckList = document.querySelectorAll(".form-li");
 
             //DOM to bind click event to each node in nodelist and remove node if clicked
             nodeListCheckList.forEach(checkListItem => {
@@ -46,11 +47,11 @@ export function addItemToCheckList() {
 }
 
 export function clearForm() {
-    const nodeListCheckList = document.querySelectorAll("li");
+    const nodeListCheckList = document.querySelectorAll(".form-li");
     for (let i = 0; i < nodeListCheckList.length; i++) {
         nodeListCheckList[i].remove();
     }
-    document.getElementById("add.todo").reset();
+    document.getElementById("add-todo").reset();
 }
 
 export function displayToDo() {
@@ -97,7 +98,7 @@ export function displayToDo() {
     for (let key in _displayArray) {
         console.log(`${key}: ${_displayArray[key]}`);
         const para = document.createElement("p");
-        para.textContent = (`${_displayArray[key]}`);
+        para.textContent = (`${key}: ${_displayArray[key]}`);
         card.appendChild(para);
     }
 
